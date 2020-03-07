@@ -28,27 +28,48 @@
       <div class="settings-container container">
         <div class="container-label">settings</div>
         <div class="setting">
-          <label class="toggle-on-click">
-            Flatten Indentation?
-            <select id="flatten-indentation">
+          <label
+            class="toggle-on-click"
+            title="removes indentiation at the beginning of lines"
+          >
+            flatten indentation?
+            <select id="flatten-indentation" class="hidden-select-setting">
               <option value="false">No</option>
               <option value="true">Yes</option>
             </select>
           </label>
         </div>
         <div class="setting">
-          <label class="toggle-on-click">
-            Remove Bullets?
-            <select id="remove-bullets">
+          <label
+            class="toggle-on-click"
+            title="removes bullets at the beginning of lines"
+          >
+            remove bullets?
+            <select id="remove-bullets" class="hidden-select-setting">
               <option value="false">No</option>
               <option value="true">Yes</option>
             </select>
           </label>
         </div>
         <div class="setting">
-          <label class="toggle-on-click">
-            Remove [[Brackets]]?
-            <select id="remove-double-brackets">
+          <label
+            class="toggle-on-click"
+            title="removes brackets, and markdown aliases for pages"
+          >
+            remove [[brackets]]?
+            <select id="remove-double-brackets" class="hidden-select-setting">
+              <option value="false">No</option>
+              <option value="true">Yes</option>
+            </select>
+          </label>
+        </div>
+        <div class="setting">
+          <label
+            class="toggle-on-click"
+            title="removes bold, italic and highlighting markdown"
+          >
+            remove formatting?
+            <select id="remove-formatting" class="hidden-select-setting">
               <option value="false">No</option>
               <option value="true">Yes</option>
             </select>

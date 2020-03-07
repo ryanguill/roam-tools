@@ -11,6 +11,12 @@ $(document).ready(function() {
       newSelectedIndex = 0;
     }
     $target.prop("selectedIndex", newSelectedIndex);
+
+    if ($target.val() === "true") {
+      $target.closest("div.setting").addClass("selected");
+    } else {
+      $target.closest("div.setting").removeClass("selected");
+    }
     render();
   });
 
@@ -23,7 +29,8 @@ function render() {
   const settings = {
     flatten_indentation: $("#flatten-indentation").val() === "true",
     remove_bullets: $("#remove-bullets").val() === "true",
-    remove_double_brackets: $("#remove-double-brackets").val() === "true"
+    remove_double_brackets: $("#remove-double-brackets").val() === "true",
+    remove_formatting: $("#remove-formatting").val() === "true"
   };
 
   //console.log(settings);
@@ -41,6 +48,10 @@ function render() {
 
   if (settings.remove_double_brackets) {
     result = removeDoubleBrackets(result);
+  }
+
+  if (settings.remove_formatting) {
+    result = removeFormatting(result);
   }
 
   $("#output").val(result);
@@ -72,6 +83,18 @@ function removeDoubleBrackets(input) {
         .replace(/\[([^\[\]]+)\]\((\[\[|\(\()([^\[\]]+)(\]\]|\)\))\)/gm, "$1")
         .replace(/\[\[([^\[\]]+)\]\]/gm, "$1")
         .replace(/\(\(([^\(\)]+)\)\)/gm, "$1");
+    })
+    .join("\n");
+}
+
+function removeFormatting(input) {
+  return input
+    .split("\n")
+    .map(function(line) {
+      return line
+        .replace(/\*\*(.+)\*\*/gm, "$1")
+        .replace(/\_\_(.+)\_\_/gm, "$1")
+        .replace(/\^\^(.+)\^\^/gm, "$1");
     })
     .join("\n");
 }

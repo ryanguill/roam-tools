@@ -87,3 +87,15 @@ div.about {
 
   width: 290px;
 }
+
+.hidden-select-setting {
+  display: none;
+}
+
+.setting.selected {
+  font-weight: bolder;
+}
+
+.setting.selected label.toggle-on-click:after {
+  content: " ✅";
+}
