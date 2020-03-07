@@ -12,10 +12,19 @@ $(document).ready(function() {
     }
     $target.prop("selectedIndex", newSelectedIndex);
 
-    if ($target.val() === "true") {
+    const currentValue = $target.val();
+    $target.closest("div.setting").removeClass("selected");
+    $target.closest("div.setting").removeClass("zero");
+    $target.closest("div.setting").removeClass("one");
+    $target.closest("div.setting").removeClass("two");
+    if (currentValue === "true") {
       $target.closest("div.setting").addClass("selected");
-    } else {
-      $target.closest("div.setting").removeClass("selected");
+    } else if (currentValue === "0") {
+      $target.closest("div.setting").addClass("zero");
+    } else if (currentValue === "1") {
+      $target.closest("div.setting").addClass("one");
+    } else if (currentValue === "2") {
+      $target.closest("div.setting").addClass("two");
     }
     render();
   });
@@ -30,13 +39,20 @@ function render() {
     flatten_indentation: $("#flatten-indentation").val() === "true",
     remove_bullets: $("#remove-bullets").val() === "true",
     remove_double_brackets: $("#remove-double-brackets").val() === "true",
-    remove_formatting: $("#remove-formatting").val() === "true"
+    remove_formatting: $("#remove-formatting").val() === "true",
+    add_line_breaks: Number($("#add-line-breaks").val())
   };
+
+  if (isNaN(settings.add_line_breaks)) {
+    settings.add_line_breaks = 0;
+  }
 
   //console.log(settings);
 
   const input = $("#input").val();
   let result = input;
+
+  result = addLineBreaksBeforeParagraphs(result, settings.add_line_breaks);
 
   if (settings.flatten_indentation) {
     result = flattenIndentation(result);
@@ -55,6 +71,19 @@ function render() {
   }
 
   $("#output").val(result);
+}
+
+function addLineBreaksBeforeParagraphs(input, numberOfLineBreaks) {
+  return input
+    .split("\n")
+    .map(function(line, index) {
+      //dont add line breaks before the first paragraph
+      if (index > 0 && numberOfLineBreaks > 0 && line.trimStart() === line) {
+        return "\n".repeat(numberOfLineBreaks) + line;
+      }
+      return line;
+    })
+    .join("\n");
 }
 
 function flattenIndentation(input) {

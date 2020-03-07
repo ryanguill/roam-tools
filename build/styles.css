@@ -99,3 +99,15 @@ div.about {
 .setting.selected label.toggle-on-click:after {
   content: " ✅";
 }
+
+.setting.zero label.toggle-on-click:after {
+  content: " 0️⃣";
+}
+
+.setting.one label.toggle-on-click:after {
+  content: " 1️⃣";
+}
+
+.setting.two label.toggle-on-click:after {
+  content: " 2️⃣";
+}
