@@ -33,14 +33,29 @@ body {
   font-size: 12pt;
 }
 
+a,
+a:hover,
+a:visited {
+  color: #eac67a;
+  text-decoration: underline;
+}
+
 header {
-  font-size: 18pt;
+  font-size: 16pt;
   vertical-align: middle;
+  border-bottom: 2px solid #984b43;
+}
+
+header a,
+a:visited,
+a:hover {
+  text-decoration: none;
 }
 
 .container-label {
   font-size: larger;
   font-weight: bold;
+  border-bottom: 2px solid #984b43;
 }
 
 .container {
@@ -56,9 +71,19 @@ header {
 #output {
   height: 100vh;
   width: 99%;
+  background-color: #eaeaea;
 }
 
 .setting {
   border-bottom: 2px solid #984b43;
   margin: 10px 1px;
+}
+
+div.about {
+  margin-left: 10px;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+
+  width: 290px;
 }

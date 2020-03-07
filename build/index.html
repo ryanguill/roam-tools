@@ -19,7 +19,11 @@
   <body>
     <div class="parent">
       <div class="header-container">
-        <header>roam-tools.ryanguill.com</header>
+        <header>
+          <a href="https://roam-tools.ryanguill.com"
+            >roam-tools.ryanguill.com</a
+          >
+        </header>
       </div>
       <div class="settings-container container">
         <div class="container-label">settings</div>
@@ -50,6 +54,23 @@
             </select>
           </label>
         </div>
+        <div class="about">
+          <div class="container-label">about</div>
+          <p>
+            This is a __super__ beta, __super__ simple js application to
+            automate a few transformations for your [[<a href="roamresearch.com"
+              >Roam</a
+            >]] content. Any content you paste here only lives on your computer,
+            nothing is sent anywhere, nothing is ever logged. <br />If you have
+            any ideas feel free to reach out or contribute on [[<a
+              href="https://github.com/ryanguill/roam-tools"
+              >github</a
+            >]] or shout at me on twitter [[<a
+              href="https://twitter.com/ryanguill/"
+              >&NoBreak;@ryanguill</a
+            >]]
+          </p>
+        </div>
       </div>
       <div class="input-container container">
         <div class="container-label">input</div>
@@ -60,7 +81,7 @@
       <div class="output-container container">
         <div class="container-label">output</div>
         <div class="output-textarea-container">
-          <textarea id="output" name="output"></textarea>
+          <textarea id="output" name="output" readonly aria-readonly></textarea>
         </div>
       </div>
     </div>
