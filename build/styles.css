@@ -1,0 +1,64 @@
+.parent {
+  display: grid;
+  grid-template-columns: 300px repeat(2, 1fr);
+  grid-template-rows: 40px 1fr;
+  grid-column-gap: 5px;
+  grid-row-gap: 0px;
+}
+
+.settings-container {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.input-container {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.output-container {
+  grid-area: 2 / 3 / 3 / 4;
+}
+.header-container {
+  grid-area: 1 / 1 / 2 / 4;
+}
+
+/*
+rusty red #984b43
+gunmetal #233237
+navy blue #18121e
+warm yellow: #eac67a
+*/
+
+body {
+  background-color: #233237;
+  color: #eac67a;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 12pt;
+}
+
+header {
+  font-size: 18pt;
+  vertical-align: middle;
+}
+
+.container-label {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.container {
+  border: 1px solid #233237;
+  height: 100vh;
+}
+
+#input {
+  height: 100vh;
+  width: 99%;
+}
+
+#output {
+  height: 100vh;
+  width: 99%;
+}
+
+.setting {
+  border-bottom: 2px solid #984b43;
+  margin: 10px 1px;
+}

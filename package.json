@@ -1,0 +1,12 @@
+{
+  "name": "roam-tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo building..."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
