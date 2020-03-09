@@ -39,6 +39,7 @@ function render() {
     flatten_indentation: $("#flatten-indentation").val() === "true",
     remove_bullets: $("#remove-bullets").val() === "true",
     remove_double_brackets: $("#remove-double-brackets").val() === "true",
+    remove_double_braces: $("#remove-double-braces").val() === "true",
     remove_formatting: $("#remove-formatting").val() === "true",
     add_line_breaks: Number($("#add-line-breaks").val())
   };
@@ -62,6 +63,12 @@ function render() {
     result = removeBullets(result);
   }
 
+  if (settings.remove_double_braces) {
+    result = removeDoubleBraces(result);
+  }
+
+  result = convertTodoAndDone(result);
+
   if (settings.remove_double_brackets) {
     result = removeDoubleBrackets(result);
   }
@@ -71,6 +78,15 @@ function render() {
   }
 
   $("#output").val(result);
+}
+
+function convertTodoAndDone(input) {
+  return input
+    .split("\n")
+    .map(function(line) {
+      return line.replace("{{[[TODO]]}}", "☐").replace("{{[[DONE]]}}", "☑︎");
+    })
+    .join("\n");
 }
 
 function addLineBreaksBeforeParagraphs(input, numberOfLineBreaks) {
@@ -100,6 +116,15 @@ function removeBullets(input) {
     .split("\n")
     .map(function(line) {
       return line.replace(/^(\s*)-\s/gm, "$1");
+    })
+    .join("\n");
+}
+
+function removeDoubleBraces(input) {
+  return input
+    .split("\n")
+    .map(function(line) {
+      return line.replace(/\{\{([^\{\}]+)\}\}/gm, "$1");
     })
     .join("\n");
 }
