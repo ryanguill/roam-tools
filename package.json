@@ -2,11 +2,14 @@
   "name": "roam-tools",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "build": "echo building..."
+    "serve": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Ryan Guill",
+  "license": "ISC",
+  "dependencies": {
+    "parcel": "^2.0.0-alpha.3.2"
+  }
 }
