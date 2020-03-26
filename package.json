@@ -10,6 +10,7 @@
   "author": "Ryan Guill",
   "license": "ISC",
   "dependencies": {
-    "parcel": "^2.0.0-alpha.3.2"
+    "parcel": "^2.0.0-alpha.3.2",
+    "remarkable": "^2.0.0"
   }
 }

@@ -14,6 +14,9 @@
 }
 .output-container {
   grid-area: 2 / 3 / 3 / 4;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 .header-container {
   grid-area: 1 / 1 / 2 / 4;
@@ -60,23 +63,36 @@ a:hover {
 
 .container {
   border: 1px solid #233237;
-  height: 100vh;
+  height: calc(100vh - 40px);
 }
 
 #input {
-  height: 100vh;
+  height: calc(100vh - 40px);
   width: 99%;
 }
 
 #output {
-  height: 100vh;
+  height: calc(50vh - 25px);
   width: 99%;
   background-color: #eaeaea;
+}
+
+#rendered-output {
+  height: calc(50vh - 25px);
+  width: 100%;
+  background-color: #eaeaea;
+  color: black;
+  overflow-x:scroll ; overflow-y: scroll;
+  white-space: nowrap;
 }
 
 .setting {
   border-bottom: 2px solid #984b43;
   margin: 10px 1px;
+}
+
+span.highlight {
+    background-color: yellow;
 }
 
 div.about {

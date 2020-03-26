@@ -1,3 +1,13 @@
+import { Remarkable } from 'remarkable';
+var md = new Remarkable({breaks:true});
+
+md.inline.ruler.enable([
+  'ins',
+  'mark',
+  'sub',
+  'sup'
+]);
+
 $(document).ready(function() {
   $("label.toggle-on-click").on("click", function(e) {
     const $target = $(e.target).find("select");
@@ -78,6 +88,20 @@ function render() {
   }
 
   $("#output").val(result);
+
+  $("#rendered-output").html(md.render(convertForMarkdown(result), {"gfm": true}) + `<br />`);
+  //$("#rendered-output").html(`<pre>` + convertForMarkdown(result) + `</pre>`);
+}
+
+function convertForMarkdown(input) {
+	return input.split("\n")
+		.map(function (line) {
+			return line.replace(/__/gm, `_`)
+		})
+		.map(function (line) {
+			return line.replace(/\^\^(.+)\^\^/gm, `==$1==`)
+		})
+	.join("\n");
 }
 
 function convertTodoAndDone(input) {
