@@ -36,9 +36,10 @@ body {
   font-size: 12pt;
 }
 
-a :not(.rendered-output),
-a:hover :not(.rendered-output),
-a:visited :not(.rendered-output) {
+
+a.styled,
+a.styled:hover,
+a.styled:visited {
   color: #eac67a;
   text-decoration: underline;
 }
