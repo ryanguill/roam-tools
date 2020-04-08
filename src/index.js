@@ -51,7 +51,8 @@ function render() {
     remove_double_brackets: $("#remove-double-brackets").val() === "true",
     remove_double_braces: $("#remove-double-braces").val() === "true",
     remove_formatting: $("#remove-formatting").val() === "true",
-    add_line_breaks: Number($("#add-line-breaks").val())
+    add_line_breaks: Number($("#add-line-breaks").val()),
+    remove_colon_from_attributes: $("#remove-colon-from-attributes").val() === "true"
   };
 
   if (isNaN(settings.add_line_breaks)) {
@@ -83,6 +84,10 @@ function render() {
     result = removeDoubleBrackets(result);
   }
 
+  if (settings.remove_colon_from_attributes) {
+    result = removeColonFromAttributes(result);
+  }
+
   if (settings.remove_formatting) {
     result = removeFormatting(result);
   }
@@ -100,6 +105,9 @@ function convertForMarkdown(input) {
 		})
 		.map(function (line) {
 			return line.replace(/\^\^(.+)\^\^/gm, `==$1==`)
+		})
+		.map(function (line) {
+			return line.replace(/\b(.+\:\:)/gm, `**$1**`)
 		})
 	.join("\n");
 }
@@ -140,6 +148,15 @@ function removeBullets(input) {
     .split("\n")
     .map(function(line) {
       return line.replace(/^(\s*)-\s/gm, "$1");
+    })
+    .join("\n");
+}
+
+function removeColonFromAttributes(input) {
+  return input
+    .split("\n")
+    .map(function(line) {
+      return line.replace(/\b(.+)\:\:/gm, "$1:");
     })
     .join("\n");
 }
