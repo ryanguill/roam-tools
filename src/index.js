@@ -1,12 +1,56 @@
-import { Remarkable } from 'remarkable';
-var md = new Remarkable({breaks:true});
+import { Remarkable } from "remarkable";
+var md = new Remarkable({ breaks: true });
 
-md.inline.ruler.enable([
-  'ins',
-  'mark',
-  'sub',
-  'sup'
-]);
+md.inline.ruler.enable(["ins", "mark", "sub", "sup"]);
+
+function setSelectValue(id, value) {
+  const $target = $("#" + id);
+  const options = [...$target.get(0).options];
+  let currentValue = $target.val();
+  let maxIterations = value === null ? 1 : options.length;
+  let iterationCount = 0;
+  let newSelectedIndex;
+
+  while (currentValue !== value) {
+    iterationCount += 1;
+    const selectedIndex = $target.get(0).selectedIndex;
+
+    newSelectedIndex = selectedIndex + 1;
+    if (newSelectedIndex > options.length - 1) {
+      newSelectedIndex = 0;
+    }
+    $target.prop("selectedIndex", newSelectedIndex);
+    currentValue = $target.val();
+    if (iterationCount >= maxIterations) {
+      //we looped around and didnt find the target value, so stop
+      break;
+    }
+  }
+
+  $target.closest("div.setting").removeClass("selected");
+  $target.closest("div.setting").removeClass("zero");
+  $target.closest("div.setting").removeClass("one");
+  $target.closest("div.setting").removeClass("two");
+  if (currentValue === "true") {
+    $target.closest("div.setting").addClass("selected");
+  } else if (currentValue === "0") {
+    $target.closest("div.setting").addClass("zero");
+  } else if (currentValue === "1") {
+    $target.closest("div.setting").addClass("one");
+  } else if (currentValue === "2") {
+    $target.closest("div.setting").addClass("two");
+  }
+
+  var searchParams = new URLSearchParams(window.location.search);
+  if (newSelectedIndex === 0) {
+    searchParams.delete($target.attr("id"));
+  } else {
+    searchParams.set($target.attr("id"), currentValue);
+  }
+  var newRelativePathQuery =
+    window.location.pathname + "?" + searchParams.toString();
+  history.pushState(null, "", newRelativePathQuery);
+}
 
 $(document).ready(function() {
   $("label.toggle-on-click").on("click", function(e) {
@@ -14,32 +58,17 @@ $(document).ready(function() {
     if (!$target.length) {
       return;
     }
-    const selectedIndex = $target.get(0).selectedIndex;
-    const options = [...$target.get(0).options];
-    let newSelectedIndex = selectedIndex + 1;
-    if (newSelectedIndex > options.length - 1) {
-      newSelectedIndex = 0;
-    }
-    $target.prop("selectedIndex", newSelectedIndex);
+    setSelectValue($target.attr("id"), null);
 
-    const currentValue = $target.val();
-    $target.closest("div.setting").removeClass("selected");
-    $target.closest("div.setting").removeClass("zero");
-    $target.closest("div.setting").removeClass("one");
-    $target.closest("div.setting").removeClass("two");
-    if (currentValue === "true") {
-      $target.closest("div.setting").addClass("selected");
-    } else if (currentValue === "0") {
-      $target.closest("div.setting").addClass("zero");
-    } else if (currentValue === "1") {
-      $target.closest("div.setting").addClass("one");
-    } else if (currentValue === "2") {
-      $target.closest("div.setting").addClass("two");
-    }
     render();
   });
 
   $("#input").on("change keyup", render);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  urlParams.forEach(function(value, key) {
+    setSelectValue(key, value);
+  });
 
   render();
 });
@@ -52,7 +81,8 @@ function render() {
     remove_double_braces: $("#remove-double-braces").val() === "true",
     remove_formatting: $("#remove-formatting").val() === "true",
     add_line_breaks: Number($("#add-line-breaks").val()),
-    remove_colon_from_attributes: $("#remove-colon-from-attributes").val() === "true",
+    remove_colon_from_attributes:
+      $("#remove-colon-from-attributes").val() === "true",
     remove_quotes: $("#remove-quotes").val() === "true"
   };
 
@@ -99,22 +129,25 @@ function render() {
 
   $("#output").val(result);
 
-  $("#rendered-output").html(md.render(convertForMarkdown(result), {"gfm": true}) + `<br />`);
+  $("#rendered-output").html(
+    md.render(convertForMarkdown(result), { gfm: true }) + `<br />`
+  );
   //$("#rendered-output").html(`<pre>` + convertForMarkdown(result) + `</pre>`);
 }
 
 function convertForMarkdown(input) {
-	return input.split("\n")
-		.map(function (line) {
-			return line.replace(/__/gm, `_`)
-		})
-		.map(function (line) {
-			return line.replace(/\^\^(.+)\^\^/gm, `==$1==`)
-		})
-		.map(function (line) {
-			return line.replace(/\b(.+\:\:)/gm, `**$1**`)
-		})
-	.join("\n");
+  return input
+    .split("\n")
+    .map(function(line) {
+      return line.replace(/__/gm, `_`);
+    })
+    .map(function(line) {
+      return line.replace(/\^\^(.+)\^\^/gm, `==$1==`);
+    })
+    .map(function(line) {
+      return line.replace(/\b(.+\:\:)/gm, `**$1**`);
+    })
+    .join("\n");
 }
 
 function convertTodoAndDone(input) {
@@ -158,16 +191,15 @@ function removeBullets(input) {
 }
 
 function removeColonFromAttributes(input) {
-	return input
-		.split("\n")
-		.map(function (line) {
-			return line.replace(/\b(.+)\:\:/gm, "$1:");
-		})
-		.join("\n");
+  return input
+    .split("\n")
+    .map(function(line) {
+      return line.replace(/\b(.+)\:\:/gm, "$1:");
+    })
+    .join("\n");
 }
 
 function removeQuotes(input) {
-console.log("quotes");
   return input
     .split("\n")
     .map(function(line) {
