@@ -203,7 +203,7 @@ function removeQuotes(input) {
   return input
     .split("\n")
     .map(function(line) {
-      return line.replace(/\"(.+)\"/gm, "$1:");
+      return line.replace(/\"(.+)\"/gm, "$1");
     })
     .join("\n");
 }
