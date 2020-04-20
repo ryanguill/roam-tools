@@ -83,7 +83,8 @@ function render() {
     add_line_breaks: Number($("#add-line-breaks").val()),
     remove_colon_from_attributes:
       $("#remove-colon-from-attributes").val() === "true",
-    remove_quotes: $("#remove-quotes").val() === "true"
+    remove_quotes: $("#remove-quotes").val() === "true",
+    remove_hashtag_marks: $("#remove-hashtag-marks").val() === "true"
   };
 
   if (isNaN(settings.add_line_breaks)) {
@@ -121,6 +122,10 @@ function render() {
 
   if (settings.remove_quotes) {
     result = removeQuotes(result);
+  }
+
+  if (settings.remove_hashtag_marks) {
+    result = removeHashtagMarks(result);
   }
 
   if (settings.remove_formatting) {
@@ -204,6 +209,15 @@ function removeQuotes(input) {
     .split("\n")
     .map(function(line) {
       return line.replace(/\"(.+)\"/gm, "$1");
+    })
+    .join("\n");
+}
+
+function removeHashtagMarks(input) {
+  return input
+    .split("\n")
+    .map(function(line) {
+      return line.replace(/\#(.+)\b/gm, "$1");
     })
     .join("\n");
 }
