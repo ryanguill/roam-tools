@@ -232,7 +232,7 @@ function removeDoubleBraces(input) {
 }
 
 function removeDoubleBrackets(input) {
-  return input
+  const result = input
     .split("\n")
     .map(function(line) {
       return line
@@ -241,6 +241,16 @@ function removeDoubleBrackets(input) {
         .replace(/\(\(([^\(\)]+)\)\)/gm, "$1");
     })
     .join("\n");
+
+  const matches = [
+    ...result.matchAll(/\[([^\[\]]+)\]\((\[\[|\(\()([^\[\]]+)(\]\]|\)\))\)/gm),
+    ...result.matchAll(/\[\[([^\[\]]+)\]\]/gm),
+    ...result.matchAll(/\(\(([^\(\)]+)\)\)/gm)
+  ];
+  if (matches.length > 0) {
+    return removeDoubleBrackets(result);
+  }
+  return result;
 }
 
 function removeFormatting(input) {
