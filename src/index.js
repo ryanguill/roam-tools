@@ -7,8 +7,8 @@ function setSelectValue(id, value) {
   const $target = $("#" + id);
 
   if ($target.length === 0) {
-		//dont recognize this id
-		return;
+    //dont recognize this id
+    return;
   }
 
   const options = [...$target.get(0).options];
@@ -60,7 +60,6 @@ function setSelectValue(id, value) {
 }
 
 $(document).ready(function() {
-
   $("label.toggle-on-click").on("click", function(e) {
     const $target = $(e.target).find("select");
     if (!$target.length) {
@@ -142,9 +141,9 @@ function render() {
   }
 
   if (settings.hide_settings) {
-		hideSettings();
+    hideSettings();
   } else {
-		showSettings();
+    showSettings();
   }
 
   $("#output").val(result);
@@ -166,6 +165,13 @@ function convertForMarkdown(input) {
     })
     .map(function(line) {
       return line.replace(/\b(.+\:\:)/gm, `**$1**`);
+    })
+    .map(function(line) {
+      if (line.trim().startsWith("- ")) {
+        return line;
+      } else {
+        return line.replace(/\s\s\s\s/gm, "&nbsp;&nbsp;&nbsp;&nbsp;");
+      }
     })
     .join("\n");
 }
@@ -280,16 +286,16 @@ function removeFormatting(input) {
     .join("\n");
 }
 
-function hideSettings () {
-	const parentDiv = document.querySelector("div.parent");
-	parentDiv.style.gridTemplateColumns = "0 repeat(2, 1fr)";
-	const settignsContainer = document.querySelector("div.settings-container");
-	settignsContainer.style.display = "none";
+function hideSettings() {
+  const parentDiv = document.querySelector("div.parent");
+  parentDiv.style.gridTemplateColumns = "0 repeat(2, 1fr)";
+  const settignsContainer = document.querySelector("div.settings-container");
+  settignsContainer.style.display = "none";
 }
 
-function showSettings () {
-	const parentDiv = document.querySelector("div.parent");
-	parentDiv.style.gridTemplateColumns = null;
-	const settignsContainer = document.querySelector("div.settings-container");
-	settignsContainer.style.display = null;
+function showSettings() {
+  const parentDiv = document.querySelector("div.parent");
+  parentDiv.style.gridTemplateColumns = null;
+  const settignsContainer = document.querySelector("div.settings-container");
+  settignsContainer.style.display = null;
 }
