@@ -128,3 +128,11 @@ div.about {
 .setting.two label.toggle-on-click:after {
   content: " 2️⃣";
 }
+
+.setting.three label.toggle-on-click:after {
+  content: " 3️⃣";
+}
+
+.setting.all label.toggle-on-click:after {
+  content: " *️⃣";
+}

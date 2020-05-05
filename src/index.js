@@ -35,17 +35,23 @@ function setSelectValue(id, value) {
   }
 
   $target.closest("div.setting").removeClass("selected");
+  $target.closest("div.setting").removeClass("all");
   $target.closest("div.setting").removeClass("zero");
   $target.closest("div.setting").removeClass("one");
   $target.closest("div.setting").removeClass("two");
+  $target.closest("div.setting").removeClass("three");
   if (currentValue === "true") {
     $target.closest("div.setting").addClass("selected");
+  } else if (currentValue === "999") {
+    $target.closest("div.setting").addClass("all");
   } else if (currentValue === "0") {
     $target.closest("div.setting").addClass("zero");
   } else if (currentValue === "1") {
     $target.closest("div.setting").addClass("one");
   } else if (currentValue === "2") {
-    $target.closest("div.setting").addClass("two");
+	  $target.closest("div.setting").addClass("two");
+  } else if (currentValue === "3") {
+    $target.closest("div.setting").addClass("three");
   }
 
   var searchParams = new URLSearchParams(window.location.search);
@@ -82,7 +88,7 @@ $(document).ready(function() {
 
 function render() {
   const settings = {
-    flatten_indentation: $("#flatten-indentation").val() === "true",
+    flatten_indentation: Number($("#flatten-indentation").val()),
     remove_bullets: $("#remove-bullets").val() === "true",
     remove_double_brackets: $("#remove-double-brackets").val() === "true",
     remove_double_braces: $("#remove-double-braces").val() === "true",
@@ -107,7 +113,7 @@ function render() {
   result = addLineBreaksBeforeParagraphs(result, settings.add_line_breaks);
 
   if (settings.flatten_indentation) {
-    result = flattenIndentation(result);
+    result = flattenIndentation(result, settings.flatten_indentation);
   }
 
   if (settings.remove_bullets) {
@@ -198,13 +204,26 @@ function addLineBreaksBeforeParagraphs(input, numberOfLineBreaks) {
     .join("\n");
 }
 
-function flattenIndentation(input) {
-  return input
-    .split("\n")
-    .map(function(line) {
-      return line.trimStart();
-    })
-    .join("\n");
+function flattenIndentation(input, flatten_indentation) {
+	if (flatten_indentation > 5) {
+		return input
+			.split("\n")
+			.map(function (line) {
+				return line.trimStart();
+			})
+			.join("\n");
+	} else {
+		let output = input;
+		for (let idx = 0; idx < flatten_indentation; idx++) {
+			output = output
+				.split("\n")
+				.map(function (line) {
+					return line.replace(/^\s\s\s\s(.+)/gm, "$1");
+				})
+				.join("\n");
+		}
+		return output;
+	}
 }
 
 function removeBullets(input) {
