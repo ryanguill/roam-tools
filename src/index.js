@@ -5,7 +5,14 @@ md.inline.ruler.enable(["ins", "mark", "sub", "sup"]);
 
 function setSelectValue(id, value) {
   const $target = $("#" + id);
+
+  if ($target.length === 0) {
+		//dont recognize this id
+		return;
+  }
+
   const options = [...$target.get(0).options];
+
   let currentValue = $target.val();
   let maxIterations = value === null ? 1 : options.length;
   let iterationCount = 0;
@@ -53,6 +60,7 @@ function setSelectValue(id, value) {
 }
 
 $(document).ready(function() {
+
   $("label.toggle-on-click").on("click", function(e) {
     const $target = $(e.target).find("select");
     if (!$target.length) {
@@ -84,7 +92,8 @@ function render() {
     remove_colon_from_attributes:
       $("#remove-colon-from-attributes").val() === "true",
     remove_quotes: $("#remove-quotes").val() === "true",
-    remove_hashtag_marks: $("#remove-hashtag-marks").val() === "true"
+    remove_hashtag_marks: $("#remove-hashtag-marks").val() === "true",
+    hide_settings: $("#hide-settings").val() === "true"
   };
 
   if (isNaN(settings.add_line_breaks)) {
@@ -130,6 +139,12 @@ function render() {
 
   if (settings.remove_formatting) {
     result = removeFormatting(result);
+  }
+
+  if (settings.hide_settings) {
+		hideSettings();
+  } else {
+		showSettings();
   }
 
   $("#output").val(result);
@@ -263,4 +278,18 @@ function removeFormatting(input) {
         .replace(/\^\^(.+)\^\^/gm, "$1");
     })
     .join("\n");
+}
+
+function hideSettings () {
+	const parentDiv = document.querySelector("div.parent");
+	parentDiv.style.gridTemplateColumns = "0 repeat(2, 1fr)";
+	const settignsContainer = document.querySelector("div.settings-container");
+	settignsContainer.style.display = "none";
+}
+
+function showSettings () {
+	const parentDiv = document.querySelector("div.parent");
+	parentDiv.style.gridTemplateColumns = null;
+	const settignsContainer = document.querySelector("div.settings-container");
+	settignsContainer.style.display = null;
 }
