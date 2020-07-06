@@ -134,5 +134,5 @@ div.about {
 }
 
 .setting.all label.toggle-on-click:after {
-  content: " *️⃣";
+  content: " all";
 }

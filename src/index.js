@@ -3,7 +3,7 @@ var md = new Remarkable({ breaks: true });
 
 md.inline.ruler.enable(["ins", "mark", "sub", "sup"]);
 
-function setSelectValue(id, value) {
+function setSelectValue(id, value, set_to_default=false) {
   const $target = $("#" + id);
 
   if ($target.length === 0) {
@@ -13,6 +13,9 @@ function setSelectValue(id, value) {
 
   const options = [...$target.get(0).options];
 
+	if (!!set_to_default) {
+		value = $target.data("default").toString();
+	}
   let currentValue = $target.val();
   let maxIterations = value === null ? 1 : options.length;
   let iterationCount = 0;
@@ -78,6 +81,15 @@ $(document).ready(function() {
 
   $("#input").on("change keyup", render);
 
+  $(".reset-options").on("click", function () {
+		$(".hidden-select-setting").each(function (idx, ele) {
+			const $target = $(ele);
+			setSelectValue($target.attr("id"), null, true);
+		});
+		history.pushState(null, "", window.location.pathname);
+		render();
+  });
+
   const urlParams = new URLSearchParams(window.location.search);
   urlParams.forEach(function(value, key) {
     setSelectValue(key, value);
@@ -85,6 +97,7 @@ $(document).ready(function() {
 
   render();
 });
+
 
 function render() {
   const settings = {
@@ -98,7 +111,8 @@ function render() {
       $("#remove-colon-from-attributes").val() === "true",
     remove_quotes: $("#remove-quotes").val() === "true",
     remove_hashtag_marks: $("#remove-hashtag-marks").val() === "true",
-    hide_settings: $("#hide-settings").val() === "true"
+    hide_settings: $("#hide-settings").val() === "true",
+    remove_todos: $("#remove-todos").val() === "true"
   };
 
   if (isNaN(settings.add_line_breaks)) {
@@ -122,6 +136,10 @@ function render() {
 
   if (settings.remove_double_braces) {
     result = removeDoubleBraces(result);
+  }
+
+  if (settings.remove_todos) {
+    result = removeTodos(result);
   }
 
   result = convertTodoAndDone(result);
@@ -187,6 +205,15 @@ function convertTodoAndDone(input) {
     .split("\n")
     .map(function(line) {
       return line.replace("{{[[TODO]]}}", "☐").replace("{{[[DONE]]}}", "☑︎");
+    })
+    .join("\n");
+}
+
+function removeTodos(input) {
+	return input
+    .split("\n")
+    .map(function(line) {
+      return line.replace(/\{\{\[\[TODO\]\]\}\}\s?/, "").replace(/\{\{\[\[DONE\]\]\}\}\s?/, "");
     })
     .join("\n");
 }

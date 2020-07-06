@@ -27,113 +27,125 @@
         </header>
       </div>
       <div class="settings-container container">
-        <div class="container-label">settings</div>
-        <div class="setting">
-          <label
-            class="toggle-on-click"
-            title="removes indentiation at the beginning of lines"
-          >
-            flatten indentation?
-            <select id="flatten-indentation" class="hidden-select-setting">
-              <option value="0">No</option>
-              <option value="999">All</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </label>
-        </div>
-        <div class="setting">
-          <label
-            class="toggle-on-click"
-            title="removes bullets at the beginning of lines"
-          >
-            remove bullets?
-            <select id="remove-bullets" class="hidden-select-setting">
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </label>
-        </div>
-        <div class="setting">
-          <label
-            class="toggle-on-click"
-            title="removes brackets, and markdown aliases for pages"
-          >
-            remove [[brackets]]?
-            <select id="remove-double-brackets" class="hidden-select-setting">
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </label>
-        </div>
-        <div class="setting">
-          <label class="toggle-on-click" title="removes braces">
-            remove {{braces}}?
-            <select id="remove-double-braces" class="hidden-select-setting">
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </label>
-        </div>
-        <div class="setting">
-          <label
-            class="toggle-on-click"
-            title="removes bold, italic and highlighting markdown"
-          >
-            remove formatting?
-            <select id="remove-formatting" class="hidden-select-setting">
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </label>
-        </div>
-        <div class="setting zero">
-          <label class="toggle-on-click" title="adds an extra line break">
-            add line breaks before paragraphs?
-            <select id="add-line-breaks" class="hidden-select-setting">
-              <option value="0">Zero</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-            </select>
-          </label>
-        </div>
-        <div class="setting">
-          <label class="toggle-on-click" title="turns attributes:: into attributes:">
-            remove extra colon from attributes::?
-            <select id="remove-colon-from-attributes" class="hidden-select-setting">
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </label>
-        </div>
-        <div class="setting">
-          <label class="toggle-on-click" title="remove quotes">
-            remove quote marks?
-            <select id="remove-quotes" class="hidden-select-setting">
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </label>
-        </div>
-        <div class="setting">
-          <label class="toggle-on-click" title="remove hashtag marks">
-            remove #'s?
-            <select id="remove-hashtag-marks" class="hidden-select-setting">
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </label>
-        </div>
-        <div class="setting">
-          <label class="toggle-on-click" title="hide this settings column">
-            hide options?
-            <select id="hide-settings" class="hidden-select-setting">
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </label>
-        </div>
+        <div class="container-label">settings </div>
+        <a href="#" class="reset-options styled">⤬ clear</a>
+        <form id="settings-form">
+          <div class="setting">
+            <label
+              class="toggle-on-click"
+              title="removes indentiation at the beginning of lines"
+            >
+              flatten indentation?
+              <select id="flatten-indentation" class="hidden-select-setting" data-default="0">
+                <option value="0">No</option>
+                <option value="999">All</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting">
+            <label
+              class="toggle-on-click"
+              title="removes bullets at the beginning of lines"
+            >
+              remove bullets?
+              <select id="remove-bullets" class="hidden-select-setting" data-default="false">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting">
+            <label
+              class="toggle-on-click"
+              title="removes brackets, and markdown aliases for pages"
+            >
+              remove [[brackets]]?
+              <select id="remove-double-brackets" class="hidden-select-setting" data-default="false">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-on-click" title="removes braces">
+              remove {{braces}}?
+              <select id="remove-double-braces" class="hidden-select-setting" data-default="false">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting">
+            <label
+              class="toggle-on-click"
+              title="removes bold, italic and highlighting markdown"
+            >
+              remove formatting?
+              <select id="remove-formatting" class="hidden-select-setting" data-default="false">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting zero">
+            <label class="toggle-on-click" title="adds an extra line break">
+              add line breaks before paragraphs?
+              <select id="add-line-breaks" class="hidden-select-setting" data-default="0">
+                <option value="0">Zero</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-on-click" title="turns attributes:: into attributes:">
+              remove extra colon from attributes::?
+              <select id="remove-colon-from-attributes" class="hidden-select-setting" data-default="false">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-on-click" title="remove quotes">
+              remove quote marks?
+              <select id="remove-quotes" class="hidden-select-setting" data-default="false">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-on-click" title="remove hashtag marks">
+              remove #'s?
+              <select id="remove-hashtag-marks" class="hidden-select-setting" data-default="false">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-on-click" title="remove todo and dones">
+              remove todo &amp; done's?
+              <select id="remove-todos" class="hidden-select-setting" data-default="false">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-on-click" title="hide this settings column">
+              hide options?
+              <select id="hide-settings" class="hidden-select-setting" data-default="false">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </label>
+          </div>
+        </form>
         <div class="about">
           <div class="container-label">about</div>
           <p>
@@ -149,8 +161,9 @@
             >]] or shout at me on twitter [[<a
               href="https://twitter.com/ryanguill/" class="styled"
               >&NoBreak;@ryanguill</a
-          >]]. You may also be interested in my <a href="https://gist.io/@ryanguill/f82ce1a356c36d9258415168f3da9d27" class="styled">[[Roam Capture]]</a> bookmarklet.
+          >]]. You may also be interested in my <a href="https://gist.io/@ryanguill/f82ce1a356c36d9258415168f3da9d27" class="styled">[[Roam Capture]]</a> bookmarklet or my <a href="https://greasyfork.org/en/scripts/402699-ryan-guill-s-roam-experiments-roamresearch-com" class="styled">User-Script Experiments</a>.
           </p>
+          version 20200705-01
         </div>
       </div>
       <div class="input-container container">
