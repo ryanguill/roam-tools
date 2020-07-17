@@ -84,7 +84,7 @@ a:hover {
   background-color: #eaeaea;
   color: black;
   overflow-x:scroll ; overflow-y: scroll;
-  white-space: nowrap;
+  white-space: break-spaces;
 }
 
 .setting {

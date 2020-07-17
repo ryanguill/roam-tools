@@ -3,7 +3,7 @@ var md = new Remarkable({ breaks: true });
 
 md.inline.ruler.enable(["ins", "mark", "sub", "sup"]);
 
-function setSelectValue(id, value, set_to_default=false) {
+function setSelectValue(id, value, set_to_default = false) {
   const $target = $("#" + id);
 
   if ($target.length === 0) {
@@ -13,9 +13,9 @@ function setSelectValue(id, value, set_to_default=false) {
 
   const options = [...$target.get(0).options];
 
-	if (!!set_to_default) {
-		value = $target.data("default").toString();
-	}
+  if (!!set_to_default) {
+    value = $target.data("default").toString();
+  }
   let currentValue = $target.val();
   let maxIterations = value === null ? 1 : options.length;
   let iterationCount = 0;
@@ -52,7 +52,7 @@ function setSelectValue(id, value, set_to_default=false) {
   } else if (currentValue === "1") {
     $target.closest("div.setting").addClass("one");
   } else if (currentValue === "2") {
-	  $target.closest("div.setting").addClass("two");
+    $target.closest("div.setting").addClass("two");
   } else if (currentValue === "3") {
     $target.closest("div.setting").addClass("three");
   }
@@ -81,13 +81,13 @@ $(document).ready(function() {
 
   $("#input").on("change keyup", render);
 
-  $(".reset-options").on("click", function () {
-		$(".hidden-select-setting").each(function (idx, ele) {
-			const $target = $(ele);
-			setSelectValue($target.attr("id"), null, true);
-		});
-		history.pushState(null, "", window.location.pathname);
-		render();
+  $(".reset-options").on("click", function() {
+    $(".hidden-select-setting").each(function(idx, ele) {
+      const $target = $(ele);
+      setSelectValue($target.attr("id"), null, true);
+    });
+    history.pushState(null, "", window.location.pathname);
+    render();
   });
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -97,7 +97,6 @@ $(document).ready(function() {
 
   render();
 });
-
 
 function render() {
   const settings = {
@@ -112,7 +111,8 @@ function render() {
     remove_quotes: $("#remove-quotes").val() === "true",
     remove_hashtag_marks: $("#remove-hashtag-marks").val() === "true",
     hide_settings: $("#hide-settings").val() === "true",
-    remove_todos: $("#remove-todos").val() === "true"
+    remove_todos: $("#remove-todos").val() === "true",
+    remove_namespaces: $("#remove-namespaces").val() === "true"
   };
 
   if (isNaN(settings.add_line_breaks)) {
@@ -143,6 +143,10 @@ function render() {
   }
 
   result = convertTodoAndDone(result);
+
+  if (settings.remove_namespaces) {
+    result = removeNamespaces(result);
+  }
 
   if (settings.remove_double_brackets) {
     result = removeDoubleBrackets(result);
@@ -210,10 +214,12 @@ function convertTodoAndDone(input) {
 }
 
 function removeTodos(input) {
-	return input
+  return input
     .split("\n")
     .map(function(line) {
-      return line.replace(/\{\{\[\[TODO\]\]\}\}\s?/, "").replace(/\{\{\[\[DONE\]\]\}\}\s?/, "");
+      return line
+        .replace(/\{\{\[\[TODO\]\]\}\}\s?/, "")
+        .replace(/\{\{\[\[DONE\]\]\}\}\s?/, "");
     })
     .join("\n");
 }
@@ -232,25 +238,25 @@ function addLineBreaksBeforeParagraphs(input, numberOfLineBreaks) {
 }
 
 function flattenIndentation(input, flatten_indentation) {
-	if (flatten_indentation > 5) {
-		return input
-			.split("\n")
-			.map(function (line) {
-				return line.trimStart();
-			})
-			.join("\n");
-	} else {
-		let output = input;
-		for (let idx = 0; idx < flatten_indentation; idx++) {
-			output = output
-				.split("\n")
-				.map(function (line) {
-					return line.replace(/^\s\s\s\s(.+)/gm, "$1");
-				})
-				.join("\n");
-		}
-		return output;
-	}
+  if (flatten_indentation > 5) {
+    return input
+      .split("\n")
+      .map(function(line) {
+        return line.trimStart();
+      })
+      .join("\n");
+  } else {
+    let output = input;
+    for (let idx = 0; idx < flatten_indentation; idx++) {
+      output = output
+        .split("\n")
+        .map(function(line) {
+          return line.replace(/^\s\s\s\s(.+)/gm, "$1");
+        })
+        .join("\n");
+    }
+    return output;
+  }
 }
 
 function removeBullets(input) {
@@ -296,6 +302,12 @@ function removeDoubleBraces(input) {
       return line.replace(/\{\{([^\{\}]+)\}\}/gm, "$1");
     })
     .join("\n");
+}
+
+function removeNamespaces(input) {
+	return input.split("\n").map(function(line) {
+		return line.replace(/\[\[(.+?)\/(.+?)\]\]/gm, "[[$2]]");
+	}).join("\n")
 }
 
 function removeDoubleBrackets(input) {
