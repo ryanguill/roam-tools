@@ -305,9 +305,18 @@ function removeDoubleBraces(input) {
 }
 
 function removeNamespaces(input) {
-	return input.split("\n").map(function(line) {
-		return line.replace(/\[\[(.+?)\/(.+?)\]\]/gm, "[[$2]]");
-	}).join("\n")
+  const result = input
+    .split("\n")
+    .map(function(line) {
+      return line.replace(/\[\[(.+?)\/(.+?)\]\]/gm, "[[$2]]");
+    })
+    .join("\n");
+
+  const matches = [...result.matchAll(/\[\[(.+?)\/(.+?)\]\]/gm)];
+  if (matches.length > 0) {
+    return removeNamespaces(result);
+  }
+  return result;
 }
 
 function removeDoubleBrackets(input) {
