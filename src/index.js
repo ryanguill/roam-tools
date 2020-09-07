@@ -184,7 +184,7 @@ function render() {
 		$("#output").val(latexResult);
 
 		$("#rendered-output").html(`LaTeX only output, see above
-<a href="data:application/x-latex;base64,${btoa(latexResult)}" download="roam-tools-latex-export.latex">download latex file</a
+<a href="data:application/x-latex;base64,${btoa(latexResult)}" download="roam-tools-latex-export.tex">download latex file</a
 		`);
 	} else {
 		$("#output").val(result);
