@@ -97,12 +97,10 @@ span.highlight {
 }
 
 div.about {
-  margin-left: 10px;
-  position: fixed;
-  left: 0px;
-  bottom: 0px;
-
-  width: 290px;
+  font-size: .8em;
+  margin-top: 40px;
+  border: 2px solid #666;
+  padding: 10px;
 }
 
 .hidden-select-setting {
