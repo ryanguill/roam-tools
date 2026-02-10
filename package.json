@@ -1,16 +1,24 @@
 {
   "name": "roam-tools",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tools to transform Roam Research content for sharing",
+  "packageManager": "bun@1.3.9",
   "scripts": {
-    "serve": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "dev": "bun run scripts/dev.js",
+    "serve": "bun run dev",
+    "build": "bun build src/index.html --outdir dist --target browser --sourcemap --minify",
+    "clean": "rm -rf dist",
+    "test": "bun test"
   },
-  "keywords": [],
+  "keywords": [
+    "roam",
+    "markdown",
+    "text-transform"
+  ],
   "author": "Ryan Guill",
   "license": "ISC",
   "dependencies": {
-    "parcel": "^2.0.0-alpha.3.2",
-    "remarkable": "^2.0.0"
+    "jquery": "^3.7.1",
+    "remarkable": "^2.0.1"
   }
 }
